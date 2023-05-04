@@ -1,11 +1,14 @@
-import { Input, ContainerInput } from "./styles";
+import { InputField, ContainerInput, Label } from "./styles";
 
-const InputField = ({ type, placeholder, id }) => {
+const Input = ({ type, placeholder, id, children }) => {
   return (
-    <ContainerInput>
-      <Input type={type} placeholder={placeholder} id={id} />
-    </ContainerInput>
+    <>
+      <ContainerInput>
+        <Label htmlFor={id}>{children}</Label>
+        <InputField type={type} placeholder={placeholder} id={id} />
+      </ContainerInput>
+    </>
   );
 };
 
-export default InputField;
+export default Input;

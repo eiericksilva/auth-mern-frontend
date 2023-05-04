@@ -1,9 +1,8 @@
 import { Link } from "react-router-dom";
-import InputField from "../../components/Input";
 import Button from "../../components/button";
 import WrapperForm from "../../components/wrapperForm";
 import Form from "../../components/form";
-import { ContainerInput } from "../../components/Input/styles";
+import Input from "../../components/Input";
 
 const SignUp = () => {
   return (
@@ -11,34 +10,24 @@ const SignUp = () => {
       <h1>Sign up</h1>
       <p>Join our community now!</p>
       <Form>
-        <ContainerInput>
-          <label htmlFor="email">E-mail</label>
-          <InputField type="email" placeholder="Type your Email" id="email">
-            <InputField type="text" placeholder="Type your email" id="email" />
-          </InputField>
-        </ContainerInput>
-        <ContainerInput>
-          <label htmlFor="password">Password</label>
-          <InputField
-            type="password"
-            placeholder="Type your password"
-            id="password"
-          />
-        </ContainerInput>
-
-        <ContainerInput>
-          <label htmlFor="confirmPassword">Confirm Password</label>
-          <InputField
-            type="password"
-            placeholder="Type your password again"
-            id="confirmPassword"
-          />
-        </ContainerInput>
+        <Input type="text" placeholder="Type your email" id="email">
+          E-mail
+        </Input>
+        <Input type="password" placeholder="Type your password" id="password">
+          Password
+        </Input>
+        <Input
+          type="password"
+          placeholder="Confirm your password"
+          id="confirmPassword"
+        >
+          Confirm Password
+        </Input>
         <Button type="submit" onClick={() => console.log("submitado")}>
           Sign Up
         </Button>
-        <Link to="/">Go to Sign In</Link>
       </Form>
+      <Link to="/">Go to Sign In</Link>
     </WrapperForm>
   );
 };

@@ -1,24 +1,22 @@
 import { useState } from "react";
-import { ContainerInput } from "./styles";
-import InputField from "../Input";
 import { RxEyeClosed, RxEyeOpen } from "react-icons/rx";
+import Input from "../Input";
 
 const PasswordField = () => {
   const [passwordIsVisible, setPasswordIsVisible] = useState(false);
   return (
-    <ContainerInput>
-      <label htmlFor="password">Password</label>
-      <InputField
-        type={passwordIsVisible ? "text" : "password"}
-        placeholder="Type your password"
-        id="password"
-      />
+    <Input
+      id="password"
+      type={passwordIsVisible ? "text" : "password"}
+      placeholder="Type your password"
+    >
+      Password
       {passwordIsVisible ? (
         <RxEyeOpen onClick={() => setPasswordIsVisible(false)} />
       ) : (
         <RxEyeClosed onClick={() => setPasswordIsVisible(true)} />
       )}
-    </ContainerInput>
+    </Input>
   );
 };
 
