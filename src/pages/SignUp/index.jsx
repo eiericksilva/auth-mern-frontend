@@ -1,22 +1,45 @@
 import { Link } from "react-router-dom";
+import InputField from "../../components/Input";
+import Button from "../../components/button";
+import WrapperForm from "../../components/wrapperForm";
+import Form from "../../components/form";
+import { ContainerInput } from "../../components/Input/styles";
 
 const SignUp = () => {
   return (
-    <form>
-      <h1>SignUp</h1>
-      <div className="container">
-        <input type="text" placeholder="email" />
-        <div>
-          <input type="password" name="password" placeholder="password" />
-          <input
+    <WrapperForm>
+      <h1>Sign up</h1>
+      <p>Join our community now!</p>
+      <Form>
+        <ContainerInput>
+          <label htmlFor="email">E-mail</label>
+          <InputField type="email" placeholder="Type your Email" id="email">
+            <InputField type="text" placeholder="Type your email" id="email" />
+          </InputField>
+        </ContainerInput>
+        <ContainerInput>
+          <label htmlFor="password">Password</label>
+          <InputField
             type="password"
-            name="password"
-            placeholder="confirm your password"
+            placeholder="Type your password"
+            id="password"
           />
-        </div>
-        <Link to="/">To to Sign In</Link>
-      </div>
-    </form>
+        </ContainerInput>
+
+        <ContainerInput>
+          <label htmlFor="confirmPassword">Confirm Password</label>
+          <InputField
+            type="password"
+            placeholder="Type your password again"
+            id="confirmPassword"
+          />
+        </ContainerInput>
+        <Button type="submit" onClick={() => console.log("submitado")}>
+          Sign Up
+        </Button>
+        <Link to="/">Go to Sign In</Link>
+      </Form>
+    </WrapperForm>
   );
 };
 

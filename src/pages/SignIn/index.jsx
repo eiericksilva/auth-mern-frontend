@@ -1,11 +1,14 @@
-import { ContainerInput, Form, Wrapper } from "./styles";
 import InputField from "../../components/Input";
 import Button from "../../components/button";
 import PasswordField from "../../components/passwordField";
+import { Link } from "react-router-dom";
+import WrapperForm from "../../components/wrapperForm";
+import Form from "../../components/form";
+import { ContainerInput } from "./styles";
 const SignIn = () => {
   return (
-    <Wrapper>
-      <h1>Login</h1>
+    <WrapperForm>
+      <h1>Sign In</h1>
       <p>Enter your access data in the field below</p>
       <Form>
         <ContainerInput>
@@ -13,14 +16,12 @@ const SignIn = () => {
           <InputField type="text" placeholder="Type your email" id="email" />
         </ContainerInput>
         <PasswordField />
-        <p className="forgotPassaword">
-          <a href="#">I forgot my password</a>
-        </p>
         <Button type="submit" onClick={() => console.log("submitado")}>
           Sign In
         </Button>
+        <Link to="/signup">Go to Sign Up</Link>
       </Form>
-    </Wrapper>
+    </WrapperForm>
   );
 };
 

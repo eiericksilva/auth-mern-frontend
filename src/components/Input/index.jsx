@@ -1,7 +1,11 @@
-import { Container } from "./styles";
+import { Input, ContainerInput } from "./styles";
 
 const InputField = ({ type, placeholder, id }) => {
-  return <Container type={type} placeholder={placeholder} id={id} />;
+  return (
+    <ContainerInput>
+      <Input type={type} placeholder={placeholder} id={id} />
+    </ContainerInput>
+  );
 };
 
 export default InputField;
