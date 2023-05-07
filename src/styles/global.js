@@ -17,4 +17,14 @@ export const GlobalStyle = createGlobalStyle`
 
         background-color: #78866b;
     }
+
+    a {
+        color: #596643;
+        font-weight: 700;
+        font-size: 12px;
+
+        &:hover {
+        color: #475236;
+        }
+    }
 `;

@@ -1,7 +1,11 @@
-import { Container } from "./styles";
+import { Container, WrapperForm } from "./styles";
 
 const Form = ({ children }) => {
-  return <Container>{children}</Container>;
+  return (
+    <WrapperForm>
+      <Container>{children}</Container>
+    </WrapperForm>
+  );
 };
 
 export default Form;
