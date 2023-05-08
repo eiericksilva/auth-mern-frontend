@@ -27,4 +27,8 @@ export const GlobalStyle = createGlobalStyle`
         color: #475236;
         }
     }
+
+    p.error {
+        color: red;
+    }
 `;

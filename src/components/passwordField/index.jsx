@@ -7,6 +7,7 @@ const PasswordField = () => {
   return (
     <Input
       id="password"
+      name="password"
       type={passwordIsVisible ? "text" : "password"}
       placeholder="Type your password"
     >
