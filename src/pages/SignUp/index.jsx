@@ -27,8 +27,6 @@ const SignUp = () => {
     confirmPassword: "",
   });
 
-  const [error, setError] = useState("");
-
   const handleInputChange = async (e) => {
     e.preventDefault();
     const { name, value } = e.target;
@@ -39,11 +37,9 @@ const SignUp = () => {
     e.preventDefault();
 
     try {
-      setError("");
       const validateData = await validationSchema.validate(userData);
       console.log(validateData);
     } catch (error) {
-      setError(error.message);
       console.log(error.message);
     }
   };
