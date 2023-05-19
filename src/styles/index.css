@@ -1,0 +1,28 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    height: 100vh;
+
+    background-color: #78866b;
+}
+
+a {
+    color: #596643;
+    font-weight: 700;
+    font-size: 12px;
+}
+a:hover {
+    color: #475236;
+}

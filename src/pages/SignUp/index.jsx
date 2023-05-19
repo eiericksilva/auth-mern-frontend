@@ -1,85 +1,57 @@
 import { Link } from "react-router-dom";
-import Button from "../../components/button";
-import Form from "../../components/form";
-import Input from "../../components/Input";
-import { useState } from "react";
-import * as yup from "yup";
-
-const validationSchema = yup.object({
-  email: yup
-    .string()
-    .email("email deve ser do tipo email")
-    .required("email é um campo obrigatório"),
-  password: yup
-    .string("email deve ser do tipo email")
-    .min(10, "Password deve ter ao menos 10 caracteres")
-    .required("password é um campo obrigatório"),
-  confirmPassword: yup
-    .string("email deve ser do tipo email")
-    .oneOf([yup.ref("password")], "senha e confirmação de senha não coincidem")
-    .required("password é um campo obrigatório"),
-});
 
 const SignUp = () => {
-  const [userData, setUserData] = useState({
-    email: "",
-    password: "",
-    confirmPassword: "",
-  });
-
-  const handleInputChange = async (e) => {
-    e.preventDefault();
-    const { name, value } = e.target;
-    setUserData((prev) => ({ ...prev, [name]: value }));
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    try {
-      const validateData = await validationSchema.validate(userData);
-      console.log(validateData);
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
-
   return (
-    <Form>
-      <h1>Sign up</h1>
-      <p>Join our community now!</p>
-      <Input
-        type="text"
-        placeholder="Type your email"
-        id="email"
-        name="email"
-        onChange={handleInputChange}
-      >
-        E-mail
-      </Input>
-      <Input
-        type="password"
-        placeholder="Type your password"
-        id="password"
-        name="password"
-        onChange={handleInputChange}
-      >
-        Password
-      </Input>
-      <Input
-        type="password"
-        placeholder="Confirm your password"
-        id="confirmPassword"
-        name="confirmPassword"
-        onChange={handleInputChange}
-      >
-        Confirm Password
-      </Input>
-      <Button type="submit" onClick={handleSubmit}>
-        Sign Up
-      </Button>
-      <Link to="/">Go to Sign In</Link>
-    </Form>
+    <div className="flex flex-col bg-white min-w-[400px] h-[65vh] rounded-md p-8">
+      <form className="flex flex-col h-full gap-5">
+        <h1 className="text-3xl">Sign up</h1>
+        <p>Join our community now!</p>
+        <label
+          className="flex flex-col text-xs mb-2 text-[#596643] font-bold"
+          htmlFor="email"
+        >
+          Email
+          <input
+            className="flex flex-col border border-[#a9a9a9] outline-none p-3"
+            type="text"
+            placeholder="Type your email"
+            id="email"
+          />
+        </label>
+        <label
+          className="flex flex-col text-xs mb-2 text-[#596643] font-bold"
+          htmlFor="password"
+        >
+          Password
+          <input
+            className="border border-[#a9a9a9] outline-none p-3"
+            type="password"
+            placeholder="Type your password"
+            id="password"
+          />
+        </label>
+        <label
+          className="text-xs mb-2 text-[#596643] font-bold"
+          htmlFor="confirmPassword"
+        >
+          Confirm your password
+          <input
+            className="w-full flex flex-col border border-[#a9a9a9] outline-none p-3"
+            type="password"
+            placeholder="Confirm your password"
+            id="confirmPassword"
+            name="confirmPassword"
+          />
+        </label>
+        <button
+          className="text-white p-3 font-bold bg-[#596643] border-0 rounded-md hover:cursor-pointer hover:bg-[#475236]"
+          type="submit"
+        >
+          Sign Up
+        </button>
+        <Link to="/">Go to Sign In</Link>
+      </form>
+    </div>
   );
 };
 
