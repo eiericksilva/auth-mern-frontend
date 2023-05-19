@@ -1,9 +1,15 @@
 import { Link } from "react-router-dom";
+import { useForm } from "react-hook-form";
 
 const SignUp = () => {
+  const { register, handleSubmit } = useForm();
+  const onSubmit = (data) => console.log("data:", data);
   return (
     <div className="flex flex-col bg-white min-w-[400px] h-[65vh] rounded-md p-8">
-      <form className="flex flex-col h-full gap-5">
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="flex flex-col h-full gap-5"
+      >
         <h1 className="text-3xl">Sign up</h1>
         <p>Join our community now!</p>
         <label
@@ -12,6 +18,7 @@ const SignUp = () => {
         >
           Email
           <input
+            {...register("email")}
             className="flex flex-col border border-[#a9a9a9] outline-none p-3"
             type="text"
             placeholder="Type your email"
@@ -24,6 +31,7 @@ const SignUp = () => {
         >
           Password
           <input
+            {...register("password")}
             className="border border-[#a9a9a9] outline-none p-3"
             type="password"
             placeholder="Type your password"
@@ -36,6 +44,7 @@ const SignUp = () => {
         >
           Confirm your password
           <input
+            {...register("confirmPassword")}
             className="w-full flex flex-col border border-[#a9a9a9] outline-none p-3"
             type="password"
             placeholder="Confirm your password"

@@ -1,13 +1,19 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { RxEyeClosed, RxEyeOpen } from "react-icons/rx";
+import { useForm } from "react-hook-form";
 
 const SignIn = () => {
+  const { register, handleSubmit } = useForm();
+  const onSubmit = (data) => console.log("data:", data);
   const [passwordIsVisible, setPasswordIsVisible] = useState(false);
 
   return (
     <div className="flex flex-col bg-white min-w-[400px] h-[65vh] rounded-md p-8">
-      <form className="flex flex-col h-full gap-5">
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="flex flex-col h-full gap-5"
+      >
         <h1>Sign In</h1>
         <p>Enter your access data in the field below</p>
         <label
@@ -16,6 +22,7 @@ const SignIn = () => {
         >
           Email
           <input
+            {...register("email")}
             className="border border-[#a9a9a9] outline-none p-3"
             type="text"
             placeholder="Type your email"
@@ -28,6 +35,7 @@ const SignIn = () => {
         >
           Password
           <input
+            {...register("password")}
             className="border border-[#a9a9a9] outline-none p-3"
             type={passwordIsVisible ? "text" : "password"}
             placeholder="Type your password"
