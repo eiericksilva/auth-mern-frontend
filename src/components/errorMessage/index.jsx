@@ -1,7 +1,11 @@
 import React from "react";
 
-const ErrorMessage = ({ children }) => {
-  return <span className="text-xs text-e-danger -mt-5">{children}</span>;
+const ErrorMessage = ({ children, className }) => {
+  return (
+    <span className={`text-xs text-e-danger -mt-5 ${className}`}>
+      {children}
+    </span>
+  );
 };
 
 export default ErrorMessage;

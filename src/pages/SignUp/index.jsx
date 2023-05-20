@@ -4,10 +4,14 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
+import { useState } from "react";
+
 import ErrorMessage from "../../components/errorMessage";
 
 import Input from "../../components/Input";
 import Button from "../../components/button";
+
+import api from "../../services/api";
 
 const schemaSignUp = yup
   .object({
@@ -24,14 +28,26 @@ const schemaSignUp = yup
   .required();
 
 const SignUp = () => {
+  const [errorApi, setErrorApi] = useState(null);
   const {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm({
     resolver: yupResolver(schemaSignUp),
   });
-  const onSubmit = (data) => console.log("data:", data);
+  const onSubmit = async (inputData) => {
+    api
+      .post("/user/register", inputData)
+      .then((info) => {
+        console.log(info.data.message);
+        reset();
+      })
+      .catch((error) => {
+        setErrorApi(error.response.data);
+      });
+  };
   return (
     <div className="bg-[#ffffff] flex flex-col bg-white min-w-[400px] min-h-[65vh] rounded-md p-8">
       <form
@@ -71,6 +87,9 @@ const SignUp = () => {
         </Input>
         <ErrorMessage>{errors.confirmPassword?.message}</ErrorMessage>
         <Button>Sign Up</Button>
+        <ErrorMessage className="text-center text-sm mt-1">
+          {errorApi}
+        </ErrorMessage>
         <Link to="/">Go to Sign In</Link>
       </form>
     </div>
