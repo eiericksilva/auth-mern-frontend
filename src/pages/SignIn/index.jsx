@@ -7,6 +7,7 @@ import * as yup from "yup";
 import Input from "../../components/Input";
 import PasswordField from "../../components/passwordField";
 import Button from "../../components/button";
+import ErrorMessage from "../../components/errorMessage";
 
 const schemaSignIn = yup
   .object({
@@ -41,7 +42,7 @@ const SignIn = () => {
         >
           Email
         </Input>
-        <p className="text-xs text-e-danger -mt-5">{errors.email?.message}</p>
+        <ErrorMessage>{errors.email?.message}</ErrorMessage>
 
         <PasswordField
           {...register("password")}
@@ -50,9 +51,7 @@ const SignIn = () => {
         >
           Password
         </PasswordField>
-        <p className="text-xs text-e-danger -mt-5">
-          {errors.password?.message}
-        </p>
+        <ErrorMessage>{errors.password?.message}</ErrorMessage>
 
         <Button>Sign In</Button>
         <Link to="/signup">Go to Sign Up</Link>

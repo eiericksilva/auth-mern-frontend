@@ -4,6 +4,8 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
+import ErrorMessage from "../../components/errorMessage";
+
 import Input from "../../components/Input";
 import Button from "../../components/button";
 
@@ -46,7 +48,7 @@ const SignUp = () => {
         >
           Email
         </Input>
-        <p className="text-xs text-e-danger -mt-5">{errors.email?.message}</p>
+        <ErrorMessage>{errors.email?.message}</ErrorMessage>
         <Input
           {...register("password")}
           className="border border-[#a9a9a9] outline-none p-3"
@@ -56,9 +58,7 @@ const SignUp = () => {
         >
           Password
         </Input>
-        <p className="text-xs text-e-danger -mt-5">
-          {errors.password?.message}
-        </p>
+        <ErrorMessage>{errors.password?.message}</ErrorMessage>
         <Input
           {...register("confirmPassword")}
           className="w-full flex flex-col border border-[#a9a9a9] outline-none p-3"
@@ -69,9 +69,7 @@ const SignUp = () => {
         >
           Confirm your password
         </Input>
-        <p className="text-xs text-e-danger -mt-5">
-          {errors.confirmPassword?.message}
-        </p>
+        <ErrorMessage>{errors.confirmPassword?.message}</ErrorMessage>
         <Button>Sign Up</Button>
         <Link to="/">Go to Sign In</Link>
       </form>
