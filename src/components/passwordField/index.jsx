@@ -9,7 +9,7 @@ const PasswordField = (
   return (
     <div className="flex flex-col relative">
       <label
-        className="flex flex-col text-xs mb-2 text-[#596643] font-bold"
+        className="flex flex-col text-xs mb-1 text-[#1b1f3b58] font-bold"
         htmlFor={id}
       >
         {children}

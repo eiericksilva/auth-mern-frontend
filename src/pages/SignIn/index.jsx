@@ -1,23 +1,37 @@
 import { Link } from "react-router-dom";
-import { useState } from "react";
+
 import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+
 import Input from "../../components/Input";
 import PasswordField from "../../components/passwordField";
 import Button from "../../components/button";
 
+const schemaSignIn = yup
+  .object({
+    email: yup.string().required().email(),
+    password: yup.string().required().min(10),
+  })
+  .required();
+
 const SignIn = () => {
-  const { register, handleSubmit } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schemaSignIn),
+  });
   const onSubmit = (data) => console.log("data:", data);
-  const [passwordIsVisible, setPasswordIsVisible] = useState(false);
 
   return (
-    <div className="flex flex-col bg-white min-w-[400px] h-[65vh] rounded-md p-8">
+    <div className="bg-[#ffffff] flex flex-col bg-white min-w-[400px] h-[65vh] rounded-md p-8">
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="flex flex-col h-full gap-5"
       >
         <h1 className="text-3xl">Sign In</h1>
-        <p>Enter your access data in the field below</p>
         <Input
           {...register("email")}
           className="border border-[#a9a9a9] outline-none p-3"
@@ -27,6 +41,7 @@ const SignIn = () => {
         >
           Email
         </Input>
+        <p className="text-xs text-e-danger -mt-5">{errors.email?.message}</p>
 
         <PasswordField
           {...register("password")}
@@ -35,6 +50,9 @@ const SignIn = () => {
         >
           Password
         </PasswordField>
+        <p className="text-xs text-e-danger -mt-5">
+          {errors.password?.message}
+        </p>
 
         <Button>Sign In</Button>
         <Link to="/signup">Go to Sign Up</Link>
