@@ -1,10 +1,16 @@
-const Input = ({ type, placeholder, id, children, onChange, name }) => {
+import React from "react";
+
+const Input = ({ type, placeholder, id, children, onChange, name }, ref) => {
   return (
-    <div className="flex  relative">
-      <label className="text-xs mb-2 text-[#596643] font-bold" htmlFor={id}>
+    <div className="flex flex-col relative">
+      <label
+        className="flex flex-col text-xs mb-2 text-[#596643] font-bold"
+        htmlFor={id}
+      >
         {children}
       </label>
       <input
+        ref={ref}
         className="border border-[#a9a9a9] outline-none p-3"
         type={type}
         placeholder={placeholder}
@@ -16,4 +22,6 @@ const Input = ({ type, placeholder, id, children, onChange, name }) => {
   );
 };
 
-export default Input;
+const forwaredInput = React.forwardRef(Input);
+
+export default forwaredInput;

@@ -2,6 +2,8 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import { RxEyeClosed, RxEyeOpen } from "react-icons/rx";
 import { useForm } from "react-hook-form";
+import Input from "../../components/Input";
+import Button from "../../components/button";
 
 const SignIn = () => {
   const { register, handleSubmit } = useForm();
@@ -14,21 +16,18 @@ const SignIn = () => {
         onSubmit={handleSubmit(onSubmit)}
         className="flex flex-col h-full gap-5"
       >
-        <h1>Sign In</h1>
+        <h1 className="text-3xl">Sign In</h1>
         <p>Enter your access data in the field below</p>
-        <label
-          className="flex flex-col text-xs mb-2 text-[#596643] font-bold"
-          htmlFor="email"
+        <Input
+          {...register("email")}
+          className="border border-[#a9a9a9] outline-none p-3"
+          type="text"
+          placeholder="Type your email"
+          id="email"
         >
           Email
-          <input
-            {...register("email")}
-            className="border border-[#a9a9a9] outline-none p-3"
-            type="text"
-            placeholder="Type your email"
-            id="email"
-          />
-        </label>
+        </Input>
+
         <label
           className="relative flex flex-col text-xs mb-2 text-[#596643] font-bold"
           htmlFor="password"
@@ -48,12 +47,7 @@ const SignIn = () => {
             )}
           </span>
         </label>
-        <button
-          className="text-white p-3 font-bold bg-[#596643] border-0 rounded-md hover:cursor-pointer hover:bg-[#475236]"
-          type="submit"
-        >
-          Sign In
-        </button>
+        <Button>Sign In</Button>
         <Link to="/signup">Go to Sign Up</Link>
       </form>
     </div>
