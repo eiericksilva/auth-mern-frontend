@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import { RxEyeClosed, RxEyeOpen } from "react-icons/rx";
 import { useForm } from "react-hook-form";
 import Input from "../../components/Input";
+import PasswordField from "../../components/passwordField";
 import Button from "../../components/button";
 
 const SignIn = () => {
@@ -28,25 +28,14 @@ const SignIn = () => {
           Email
         </Input>
 
-        <label
-          className="relative flex flex-col text-xs mb-2 text-[#596643] font-bold"
-          htmlFor="password"
+        <PasswordField
+          {...register("password")}
+          className="border border-[#a9a9a9] outline-none p-3"
+          placeholder="Type your password"
         >
           Password
-          <input
-            {...register("password")}
-            className="border border-[#a9a9a9] outline-none p-3"
-            type={passwordIsVisible ? "text" : "password"}
-            placeholder="Type your password"
-          />
-          <span className="absolute right-3 bottom-4">
-            {passwordIsVisible ? (
-              <RxEyeOpen onClick={() => setPasswordIsVisible(false)} />
-            ) : (
-              <RxEyeClosed onClick={() => setPasswordIsVisible(true)} />
-            )}
-          </span>
-        </label>
+        </PasswordField>
+
         <Button>Sign In</Button>
         <Link to="/signup">Go to Sign Up</Link>
       </form>
