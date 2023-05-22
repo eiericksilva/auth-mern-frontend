@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { useState } from "react";
 
@@ -12,6 +12,7 @@ import Button from "../../components/button";
 import ErrorMessage from "../../components/errorMessage";
 
 import api from "../../services/api";
+import Cookies from "js-cookie";
 
 const schemaSignIn = yup
   .object({
@@ -21,6 +22,7 @@ const schemaSignIn = yup
   .required();
 
 const SignIn = () => {
+  const navigate = useNavigate();
   const [errorApi, setErrorApi] = useState(null);
   const {
     register,
@@ -34,9 +36,10 @@ const SignIn = () => {
     api
       .post("/user/login", inputData)
       .then((info) => {
-        console.log(info.data.message);
+        Cookies.set("token", info.data.token, { expires: 1 });
         reset();
         setErrorApi(null);
+        navigate("/dashboard");
       })
       .catch((error) => {
         setErrorApi(error.response.data);
@@ -74,7 +77,9 @@ const SignIn = () => {
         <ErrorMessage className="text-center text-sm mt-1">
           {errorApi}
         </ErrorMessage>
-        <Link to="/signup">Go to Sign Up</Link>
+        <Link to="/signup" className="text-e-terciary-text text-center">
+          Go to Sign Up
+        </Link>
       </form>
     </div>
   );

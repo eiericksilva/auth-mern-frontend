@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -28,6 +28,7 @@ const schemaSignUp = yup
   .required();
 
 const SignUp = () => {
+  const navigate = useNavigate();
   const [errorApi, setErrorApi] = useState(null);
   const {
     register,
@@ -43,6 +44,7 @@ const SignUp = () => {
       .then((info) => {
         console.log(info.data.message);
         reset();
+        navigate("/dashboard");
       })
       .catch((error) => {
         setErrorApi(error.response.data);
@@ -90,7 +92,9 @@ const SignUp = () => {
         <ErrorMessage className="text-center text-sm mt-1">
           {errorApi}
         </ErrorMessage>
-        <Link to="/">Go to Sign In</Link>
+        <Link to="/" className="text-e-terciary-text text-center">
+          Go to Sign In
+        </Link>
       </form>
     </div>
   );
