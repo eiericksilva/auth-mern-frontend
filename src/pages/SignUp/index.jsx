@@ -15,6 +15,7 @@ import api from "../../services/api";
 
 const schemaSignUp = yup
   .object({
+    username: yup.string().required(),
     email: yup.string().required().email(),
     password: yup.string().required().min(10),
     confirmPassword: yup
@@ -42,9 +43,9 @@ const SignUp = () => {
     api
       .post("/user/register", inputData)
       .then((info) => {
-        console.log(info.data.message);
+        console.log(info.data);
         reset();
-        navigate("/dashboard");
+        navigate("/");
       })
       .catch((error) => {
         setErrorApi(error.response.data);
@@ -58,8 +59,15 @@ const SignUp = () => {
       >
         <h1 className="text-[#000315] text-3xl">Sign up</h1>
         <Input
+          {...register("username")}
+          type="text"
+          placeholder="Type your username"
+          id="username"
+        >
+          Username
+        </Input>
+        <Input
           {...register("email")}
-          className="flex flex-col border border-[#a9a9a9] outline-none p-3"
           type="text"
           placeholder="Type your email"
           id="email"
@@ -69,7 +77,6 @@ const SignUp = () => {
         <ErrorMessage>{errors.email?.message}</ErrorMessage>
         <Input
           {...register("password")}
-          className="border border-[#a9a9a9] outline-none p-3"
           type="password"
           placeholder="Type your password"
           id="password"
@@ -79,7 +86,6 @@ const SignUp = () => {
         <ErrorMessage>{errors.password?.message}</ErrorMessage>
         <Input
           {...register("confirmPassword")}
-          className="w-full flex flex-col border border-[#a9a9a9] outline-none p-3"
           type="password"
           placeholder="Confirm your password"
           id="confirmPassword"

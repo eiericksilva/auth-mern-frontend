@@ -28,7 +28,6 @@ const SignIn = () => {
     register,
     handleSubmit,
     formState: { errors },
-    reset,
   } = useForm({
     resolver: yupResolver(schemaSignIn),
   });
@@ -37,7 +36,6 @@ const SignIn = () => {
       .post("/user/login", inputData)
       .then((info) => {
         Cookies.set("token", info.data.token, { expires: 1 });
-        reset();
         setErrorApi(null);
         navigate("/dashboard");
       })
@@ -55,7 +53,6 @@ const SignIn = () => {
         <h1 className="text-3xl">Sign In</h1>
         <Input
           {...register("email")}
-          className="border border-[#a9a9a9] outline-none p-3"
           type="text"
           placeholder="Type your email"
           id="email"
@@ -66,7 +63,6 @@ const SignIn = () => {
 
         <PasswordField
           {...register("password")}
-          className="border border-[#a9a9a9] outline-none p-3"
           placeholder="Type your password"
         >
           Password

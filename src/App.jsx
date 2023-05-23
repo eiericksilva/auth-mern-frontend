@@ -7,34 +7,32 @@ import ProtectedRoute from "./components/protectedRoute";
 
 const App = () => {
   return (
-    <>
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <ProtectedRoute>
-              <SignIn />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/signup"
-          element={
-            <ProtectedRoute>
-              <SignUp />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/dashboard"
-          element={
-            <PrivateRoute>
-              <Dashboard />
-            </PrivateRoute>
-          }
-        />
-      </Routes>
-    </>
+    <Routes>
+      <Route
+        path="/"
+        element={
+          <ProtectedRoute>
+            <SignIn />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/signup"
+        element={
+          <ProtectedRoute>
+            <SignUp />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/dashboard"
+        element={
+          <PrivateRoute>
+            <Dashboard />
+          </PrivateRoute>
+        }
+      />
+    </Routes>
   );
 };
 
