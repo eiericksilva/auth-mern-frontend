@@ -1,3 +1,4 @@
+import TextLimit from "../textLimit";
 const News = ({ key, title, text, banner, comments, username }) => {
   return (
     <div
@@ -10,9 +11,11 @@ const News = ({ key, title, text, banner, comments, username }) => {
         </div>
         <div className="w-2/3">
           <h1 className="text-2xl">{title}</h1>
-          <p className="text-sm max-h-28 overflow-y-hidden text-ellipsis">
-            {text}
-          </p>
+          <TextLimit
+            text={text}
+            limit="150"
+            className="text-sm max-h-28 overflow-y-hidden text-ellipsis"
+          />
         </div>
       </div>
       <div className="flex justify-between items-center">

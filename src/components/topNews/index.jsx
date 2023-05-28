@@ -1,3 +1,4 @@
+import TextLimit from "../textLimit";
 const TopNews = ({ title, text, banner, username }) => {
   return (
     <div className="bg-white rounded-md p-4 py-16 flex flex-col gap-2 shadow-lg">
@@ -6,8 +7,12 @@ const TopNews = ({ title, text, banner, username }) => {
           <img className="rounded-md" src={banner} alt="" />
         </div>
         <div className="flex flex-col w-2/3">
-          <h1 className="text-4xl">{title}</h1>
-          <p className="max-h-28 overflow-y-hidden text-ellipsis">{text}</p>
+          <h1 className="text-4xl mb-4">{title}</h1>
+          <TextLimit
+            text={text}
+            limit="250"
+            className="text-lg max-h-28 overflow-y-hidden text-ellipsis"
+          />
         </div>
       </div>
       <div className="flex items-center justify-between">
