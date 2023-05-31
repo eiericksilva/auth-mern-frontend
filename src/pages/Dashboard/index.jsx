@@ -1,35 +1,19 @@
 import Navbar from "../../components/nav";
 import News from "../../components/news";
 import TopNews from "../../components/topNews";
-import api from "../../services/api";
-import { useState, useEffect } from "react";
+import Button from "../../components/button";
+import { useContext } from "react";
+import { NewsContext } from "../../context/NewsContext";
+import Footer from "../../components/footer";
+
 const Dashboard = () => {
-  const [news, setNews] = useState([]);
-  const [topNews, setTopNews] = useState(null);
-  useEffect(() => {
-    getTopNews();
-    getNews();
-  }, []);
-
-  const getNews = async () => {
-    api
-      .get("/news")
-      .then((res) => setNews(res.data.results))
-      .catch((error) => console.log(error));
-  };
-
-  const getTopNews = async () => {
-    api
-      .get("/news/top")
-      .then((res) => setTopNews(res.data))
-      .catch((error) => console.log(error));
-  };
+  const { topNews, news } = useContext(NewsContext);
 
   return (
     <div className="h-screen flex flex-col justify-between">
       <Navbar />
       <header className="flex flex-col items-center justify-around mx-8">
-        {topNews ? (
+        {topNews && topNews ? (
           <TopNews
             title={topNews.title}
             text={topNews.text}
@@ -41,20 +25,23 @@ const Dashboard = () => {
         )}
       </header>
       <main className="flex mx-8 flex-wrap justify-between">
-        {news.map((item) => (
-          <News
-            key={item.id}
-            title={item.title}
-            text={item.text}
-            banner={item.banner}
-            comments={item.comments}
-            username={item.username}
-          />
-        ))}
+        {news &&
+          news.map((item) => (
+            <News
+              key={item.id}
+              title={item.title}
+              text={item.text}
+              banner={item.banner}
+              username={item.username}
+              commentQuantity={item.comments.length}
+              likeQuantity={item.likes.length}
+            />
+          ))}
       </main>
-      <footer className="text-center bg-slate-600 text-white py-4">
-        <p>Criado por @eiericksilva.dev</p>
-      </footer>
+      <Button className="w-1/3 mx-auto m-4 bg-slate-900 hover:bg-slate-950 ">
+        Load More News...
+      </Button>
+      <Footer />
     </div>
   );
 };

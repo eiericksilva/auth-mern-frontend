@@ -2,10 +2,11 @@ import { useContext } from "react";
 import { DialogContext } from "../../context/ModalContext";
 import DialogGeneric from "../dialog";
 import { UserContext } from "../../context/UserContext";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
   const { handleOpenModal } = useContext(DialogContext);
-  const { user, logoutUser } = useContext(UserContext);
+  const { logoutUser } = useContext(UserContext);
 
   return (
     <>
@@ -15,17 +16,28 @@ const Navbar = () => {
           <span className="text-sm">seu portal de notícias</span>
         </div>
         <div className="space-x-4">
-          <button className="border border-white p-3">Edit Profile</button>
-          <button className="border border-white p-3" onClick={handleOpenModal}>
+          <Link className="p-3 text-sm text-white hover:text-slate-200" to="/">
+            Home
+          </Link>
+          <Link
+            className="p-3 text-sm text-white hover:text-slate-200"
+            to="/profile"
+          >
+            Profile
+          </Link>
+          <button
+            className="p-3 text-sm text-white hover:text-slate-200"
+            onClick={handleOpenModal}
+          >
             Create Post
           </button>
-          <button className="border border-red-600 p-3" onClick={logoutUser}>
+          <button
+            className="p-3 text-sm text-white hover:text-slate-200"
+            onClick={logoutUser}
+          >
             Sign Out
           </button>
         </div>
-        <p>
-          {user && user.user.username} - {user && user.user._id}
-        </p>
       </nav>
       <DialogGeneric />
     </>

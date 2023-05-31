@@ -27,9 +27,9 @@ const UserProvider = ({ children }) => {
   const registerUser = async (userData) => {
     api
       .post("/user/register", userData)
-      .then((info) => {
+      .then((res) => {
         setIsAuthenticated(true);
-        setUser(info.data);
+        setUser(res.data);
         navigate("/dashboard");
       })
       .catch((error) => {

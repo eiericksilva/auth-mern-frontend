@@ -1,5 +1,15 @@
+import Button from "../button";
 import TextLimit from "../textLimit";
-const News = ({ keyProp, title, text, banner, comments, username }) => {
+import { AiOutlineLike, AiOutlineComment } from "react-icons/ai";
+const News = ({
+  keyProp,
+  title,
+  text,
+  banner,
+  username,
+  commentQuantity,
+  likeQuantity,
+}) => {
   return (
     <div
       key={keyProp}
@@ -20,9 +30,22 @@ const News = ({ keyProp, title, text, banner, comments, username }) => {
       </div>
       <div className="flex justify-between items-center">
         <p>author: {username}</p>
-        <button className="text-sm bg-green-700 text-white w-1/3 h-12 rounded-lg">
-          VEJA A NOTÍCIA COMPLETA
-        </button>
+      </div>
+      <div className="flex justify-between">
+        <div className="flex w-1/5 justify-around">
+          <div
+            onClick={() => console.log("like")}
+            className="flex items-center gap-1 bg-slate-100 p-2 rounded-xl hover:bg-slate-200 hover:cursor-pointer"
+          >
+            <AiOutlineLike /> {likeQuantity}
+          </div>
+          <div className="flex items-center gap-1 bg-slate-100 p-2 rounded-xl hover:bg-slate-200 hover:cursor-pointer">
+            <AiOutlineComment /> {commentQuantity}
+          </div>
+        </div>
+        <div>
+          <Button>VEJA A NOTÍCIA COMPLETA</Button>
+        </div>
       </div>
     </div>
   );

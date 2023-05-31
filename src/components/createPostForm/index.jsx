@@ -6,7 +6,8 @@ import api from "../../services/api";
 import ErrorMessage from "../errorMessage";
 import { useContext } from "react";
 import { DialogContext } from "../../context/ModalContext";
-import { Button } from "@mui/material";
+import Button from "../button";
+import TextArea from "../../components/textarea";
 
 const schemaCreatePost = yup
   .object({
@@ -32,6 +33,7 @@ const CreatePostForm = () => {
         .post("/news", data)
         .then((res) => console.log(res.data))
         .catch((error) => console.log(error));
+      handleOpenModal();
     } catch (error) {
       console.log("error:", error);
     }
@@ -49,7 +51,7 @@ const CreatePostForm = () => {
         Título
       </Input>
       <ErrorMessage>{errors.title?.message}</ErrorMessage>
-      <Input
+      <TextArea
         {...register("text")}
         type="text"
         placeholder="Insira o texto do seu Post aqui"
@@ -57,7 +59,7 @@ const CreatePostForm = () => {
         name="text"
       >
         Texto
-      </Input>
+      </TextArea>
       <ErrorMessage>{errors.text?.message}</ErrorMessage>
       <Input
         {...register("banner")}
@@ -70,8 +72,10 @@ const CreatePostForm = () => {
       </Input>
       <ErrorMessage>{errors.bannerUrl?.message}</ErrorMessage>
 
-      <Button onClick={handleOpenModal}>Cancel</Button>
-      <Button type="submit">Register</Button>
+      <div className="flex gap-2 p-4 justify-end">
+        <Button onClick={handleOpenModal}>Cancel</Button>
+        <Button type="submit">Register</Button>
+      </div>
     </form>
   );
 };
