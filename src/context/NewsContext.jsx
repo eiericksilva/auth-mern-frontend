@@ -27,7 +27,14 @@ const NewsProvider = ({ children }) => {
 
   return (
     <NewsContext.Provider
-      value={{ news, setNews, topNews, setTopNews, getTopNews, getNews }}
+      value={{
+        news,
+        topNews,
+        setNews,
+        setTopNews,
+        getTopNews,
+        getNews,
+      }}
     >
       {children}
     </NewsContext.Provider>

@@ -3,6 +3,7 @@ import { createContext, useState, useEffect } from "react";
 import api from "../services/api";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
+import { setToken } from "../helpers/setToken";
 
 const UserContext = createContext();
 
@@ -12,14 +13,6 @@ const UserProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const navigate = useNavigate();
 
-  const setToken = async () => {
-    const token = Cookies.get("token");
-
-    if (token) {
-      api.defaults.headers.Authorization = `Bearer ${token}`;
-      setIsAuthenticated(true);
-    }
-  };
   useEffect(() => {
     setToken();
   }, []);
