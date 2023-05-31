@@ -12,7 +12,7 @@ const schemaCreatePost = yup
   .object({
     title: yup.string().required("A postagem precisa ter um título"),
     text: yup.string().required("A postagem precisa ter um texto da notícia"),
-    bannerUrl: yup.string().required("A postagem precisa ter uma url"),
+    banner: yup.string().required("A postagem precisa ter uma url"),
   })
   .required();
 
@@ -26,12 +26,17 @@ const CreatePostForm = () => {
     resolver: yupResolver(schemaCreatePost),
   });
 
-  const onSubmit = (data) => {
-    api
-      .post("/news", data)
-      .then((res) => console.log(res.data))
-      .catch((error) => console.log(error));
+  const onSubmit = async (data) => {
+    try {
+      api
+        .post("/news", data)
+        .then((res) => console.log(res.data))
+        .catch((error) => console.log(error));
+    } catch (error) {
+      console.log("error:", error);
+    }
   };
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Input
@@ -55,11 +60,11 @@ const CreatePostForm = () => {
       </Input>
       <ErrorMessage>{errors.text?.message}</ErrorMessage>
       <Input
-        {...register("bannerUrl")}
+        {...register("banner")}
         type="text"
         placeholder="Insira a URL da imagem do seu banner aqui"
         id="bannner"
-        name="bannerUrl"
+        name="banner"
       >
         Banner
       </Input>

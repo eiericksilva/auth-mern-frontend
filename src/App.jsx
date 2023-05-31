@@ -4,35 +4,37 @@ import SignUp from "./pages/SignUp";
 import Dashboard from "./pages/Dashboard";
 import PrivateRoute from "./components/privateRoute";
 import ProtectedRoute from "./components/protectedRoute";
-
+import { UserProvider } from "./context/UserContext";
 const App = () => {
   return (
-    <Routes>
-      <Route
-        path="/"
-        element={
-          <ProtectedRoute>
-            <SignIn />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/signup"
-        element={
-          <ProtectedRoute>
-            <SignUp />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/dashboard"
-        element={
-          <PrivateRoute>
-            <Dashboard />
-          </PrivateRoute>
-        }
-      />
-    </Routes>
+    <UserProvider>
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <ProtectedRoute>
+              <SignIn />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/signup"
+          element={
+            <ProtectedRoute>
+              <SignUp />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/dashboard"
+          element={
+            <PrivateRoute>
+              <Dashboard />
+            </PrivateRoute>
+          }
+        />
+      </Routes>
+    </UserProvider>
   );
 };
 

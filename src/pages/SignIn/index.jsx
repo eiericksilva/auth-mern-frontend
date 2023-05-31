@@ -1,6 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
-
-import { useState } from "react";
+import { Link } from "react-router-dom";
 
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -11,8 +9,8 @@ import PasswordField from "../../components/passwordField";
 import Button from "../../components/button";
 import ErrorMessage from "../../components/errorMessage";
 
-import api from "../../services/api";
-import Cookies from "js-cookie";
+import { UserContext } from "../../context/UserContext";
+import { useContext } from "react";
 
 const schemaSignIn = yup
   .object({
@@ -22,8 +20,7 @@ const schemaSignIn = yup
   .required();
 
 const SignIn = () => {
-  const navigate = useNavigate();
-  const [errorApi, setErrorApi] = useState(null);
+  const { loginUser, errorApi } = useContext(UserContext);
   const {
     register,
     handleSubmit,
@@ -31,21 +28,12 @@ const SignIn = () => {
   } = useForm({
     resolver: yupResolver(schemaSignIn),
   });
-  const onSubmit = (inputData) => {
-    api
-      .post("/user/login", inputData)
-      .then((info) => {
-        Cookies.set("token", info.data.token, { expires: 1 });
-        setErrorApi(null);
-        navigate("/dashboard");
-      })
-      .catch((error) => {
-        setErrorApi(error.response.data);
-      });
+  const onSubmit = (userData) => {
+    loginUser(userData);
   };
 
   return (
-    <div className="bg-[#ffffff] flex flex-col bg-white min-w-[400px] h-[65vh] rounded-md p-8">
+    <div className="flex flex-col bg-white min-w-[400px] h-[65vh] rounded-md p-8">
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="flex flex-col h-full gap-5"

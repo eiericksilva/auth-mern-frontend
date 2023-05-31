@@ -1,8 +1,8 @@
 import TextLimit from "../textLimit";
-const News = ({ key, title, text, banner, comments, username }) => {
+const News = ({ keyProp, title, text, banner, comments, username }) => {
   return (
     <div
-      key={key}
+      key={keyProp}
       className="flex flex-col bg-white my-4 p-4 w-[49%] rounded-md gap-8 shadow-lg"
     >
       <div className="flex gap-4 items-center">

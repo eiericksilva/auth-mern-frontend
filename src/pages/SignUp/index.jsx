@@ -1,17 +1,16 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-
-import { useState } from "react";
 
 import ErrorMessage from "../../components/errorMessage";
 
 import Input from "../../components/Input";
 import Button from "../../components/button";
 
-import api from "../../services/api";
+import { useContext } from "react";
+import { UserContext } from "../../context/UserContext";
 
 const schemaSignUp = yup
   .object({
@@ -29,30 +28,19 @@ const schemaSignUp = yup
   .required();
 
 const SignUp = () => {
-  const navigate = useNavigate();
-  const [errorApi, setErrorApi] = useState(null);
+  const { registerUser, apiError } = useContext(UserContext);
   const {
     register,
     handleSubmit,
     formState: { errors },
-    reset,
   } = useForm({
     resolver: yupResolver(schemaSignUp),
   });
-  const onSubmit = async (inputData) => {
-    api
-      .post("/user/register", inputData)
-      .then((info) => {
-        console.log(info.data);
-        reset();
-        navigate("/");
-      })
-      .catch((error) => {
-        setErrorApi(error.response.data);
-      });
+  const onSubmit = async (userData) => {
+    registerUser(userData);
   };
   return (
-    <div className="bg-[#ffffff] flex flex-col bg-white min-w-[400px] min-h-[65vh] rounded-md p-8">
+    <div className="flex flex-col bg-white min-w-[400px] min-h-[65vh] rounded-md p-8">
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="flex flex-col h-full gap-5"
@@ -96,7 +84,7 @@ const SignUp = () => {
         <ErrorMessage>{errors.confirmPassword?.message}</ErrorMessage>
         <Button>Sign Up</Button>
         <ErrorMessage className="text-center text-sm mt-1">
-          {errorApi}
+          {apiError}
         </ErrorMessage>
         <Link to="/" className="text-e-terciary-text text-center">
           Go to Sign In
