@@ -1,13 +1,11 @@
 import Navbar from "../../components/nav";
 import Footer from "../../components/footer";
-import { useContext, useEffect, useState } from "react";
-import { UserContext } from "../../context/UserContext";
 import api from "../../services/api";
 import { setToken } from "../../helpers/setToken";
 import News from "../../components/news";
+import { useEffect, useState } from "react";
 
 const Profile = () => {
-  const { user } = useContext(UserContext);
   const [personalNews, setPersonalNews] = useState([]);
 
   const getNewsByUser = async () => {
@@ -20,18 +18,20 @@ const Profile = () => {
   useEffect(() => {
     setToken();
     getNewsByUser();
-  }, []);
+  }, [personalNews]);
+
   return (
-    <div className="h-screen flex flex-col justify-between w-screen">
+    <div className="h-screen flex flex-col justify-between w-screen overflow-x-hidden">
       <Navbar />
-      <section className="">
-        <h1 className="">My personal data</h1>
-        <h1 className="">My Posts</h1>
-        <ul>
+      <section className="px-4">
+        <h1>My personal data</h1>
+        <h1>My Posts</h1>
+        <div className="flex flex-wrap gap-1">
           {personalNews &&
             personalNews.map((item) => (
               <News
-                key={item.id}
+                id={item.postId}
+                key={item.postId}
                 title={item.title}
                 text={item.text}
                 banner={item.banner}
@@ -40,7 +40,7 @@ const Profile = () => {
                 likeQuantity={item.likes.length}
               />
             ))}
-        </ul>
+        </div>
       </section>
       <Footer />
     </div>

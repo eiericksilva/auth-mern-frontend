@@ -1,7 +1,12 @@
 import Button from "../button";
 import TextLimit from "../textLimit";
 import { AiOutlineLike, AiOutlineComment } from "react-icons/ai";
+import { BsTrash } from "react-icons/bs";
+import { useLocation } from "react-router-dom";
+import { useContext } from "react";
+import { NewsContext } from "../../context/NewsContext";
 const News = ({
+  id,
   keyProp,
   title,
   text,
@@ -10,6 +15,9 @@ const News = ({
   commentQuantity,
   likeQuantity,
 }) => {
+  const { handleTrashNews } = useContext(NewsContext);
+  const location = useLocation();
+  const showDeleteIcon = location.pathname === "/profile";
   return (
     <div
       key={keyProp}
@@ -42,6 +50,14 @@ const News = ({
           <div className="flex items-center gap-1 bg-slate-100 p-2 rounded-xl hover:bg-slate-200 hover:cursor-pointer">
             <AiOutlineComment /> {commentQuantity}
           </div>
+          {showDeleteIcon && (
+            <div className="flex items-center gap-1 bg-slate-100 p-2 rounded-xl hover:bg-slate-200 hover:cursor-pointer">
+              <BsTrash
+                onClick={() => handleTrashNews(id)}
+                className="text-red-500"
+              />
+            </div>
+          )}
         </div>
         <div>
           <Button>VEJA A NOTÍCIA COMPLETA</Button>

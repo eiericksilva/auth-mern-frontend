@@ -1,6 +1,7 @@
 import { useState, createContext, useEffect } from "react";
 import api from "../services/api.js";
 const NewsContext = createContext();
+import { setToken } from "../helpers/setToken.js";
 
 const NewsProvider = ({ children }) => {
   const [news, setNews] = useState([]);
@@ -20,6 +21,14 @@ const NewsProvider = ({ children }) => {
       .catch((error) => console.log(error));
   };
 
+  const handleTrashNews = async (postId) => {
+    setToken();
+    api
+      .delete(`/news/${postId}`)
+      .then((res) => console.log(res.data.message))
+      .catch((error) => console.log(error));
+  };
+
   useEffect(() => {
     getTopNews();
     getNews();
@@ -34,6 +43,7 @@ const NewsProvider = ({ children }) => {
         setTopNews,
         getTopNews,
         getNews,
+        handleTrashNews,
       }}
     >
       {children}
