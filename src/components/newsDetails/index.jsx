@@ -3,6 +3,7 @@ import api from "../../services/api";
 import { useState } from "react";
 import { useEffect } from "react";
 import { setToken } from "../../helpers/setToken";
+import { AiOutlineComment, AiOutlineLike } from "react-icons/ai";
 
 const NewsDetails = () => {
   const [news, setNews] = useState();
@@ -26,26 +27,38 @@ const NewsDetails = () => {
     <div>
       {news ? (
         <main className="min-h-screen w-4/5 m-auto">
-          <header>
-            <h1 className="text-6xl">{news.title}</h1>
-            <div>
-              <p>
-                By <>{news.username}</>
-              </p>
-            </div>
-          </header>
           <section>
-            <div>
-              <img src={news.banner} alt="" />
+            <div className="bg-white p-8 rounded-xl my-4">
+              <header>
+                <h1 className="text-5xl mb-4">{news.title}</h1>
+                <div>
+                  <p className="text-slate-400">
+                    By <>{news.username}</>
+                  </p>
+                </div>
+              </header>
+              <div>
+                <img className="py-8 mx-auto" src={news.banner} alt="" />
+              </div>
+              <div>
+                <p className="text-xl font-thin">{news.text}</p>
+              </div>
+              <div className="flex gap-8 mt-10">
+                <div className="flex items-center gap-1">
+                  <AiOutlineComment />
+                  <span>{`Comentários (${news.comments.length})`}</span>
+                </div>
+                <div className="flex items-center gap-1">
+                  <AiOutlineLike />
+                  <span>{`Likes (${news.likes.length})`}</span>
+                </div>
+              </div>
             </div>
             <div>
-              <p>{news.text}</p>
+              {news.comments && (
+                <div>{news.comments.map((comment) => comment.comment)}</div>
+              )}
             </div>
-            <div className="flex gap-2">
-              <p>Icon Like X </p>
-              <p>Icon Comments Y</p>
-            </div>
-            <button className="bg-slate-400 p-4">Fazer um comentário</button>
           </section>
         </main>
       ) : (
