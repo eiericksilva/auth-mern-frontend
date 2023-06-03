@@ -35,10 +35,18 @@ const NewsProvider = ({ children }) => {
     navigate(`/news/${postId}`);
   };
 
+  const likeNews = async (postId) => {
+    setToken();
+    api
+      .patch(`/news/like/${postId}`)
+      .then((res) => console.log(res.data))
+      .catch((error) => console.log(error.message));
+  };
+
   useEffect(() => {
     getTopNews();
     getNews();
-  }, []);
+  }, [news]);
 
   return (
     <NewsContext.Provider
@@ -51,6 +59,7 @@ const NewsProvider = ({ children }) => {
         getNews,
         handleTrashNews,
         handleViewFullNews,
+        likeNews,
       }}
     >
       {children}

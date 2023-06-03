@@ -15,7 +15,8 @@ const News = ({
   commentQuantity,
   likeQuantity,
 }) => {
-  const { handleTrashNews, handleViewFullNews } = useContext(NewsContext);
+  const { handleTrashNews, handleViewFullNews, likeNews, isLiked } =
+    useContext(NewsContext);
   const location = useLocation();
   const showDeleteIcon = location.pathname === "/profile";
   return (
@@ -42,10 +43,11 @@ const News = ({
       <div className="flex justify-between">
         <div className="flex w-1/5 justify-around">
           <div
-            onClick={() => console.log("like")}
+            onClick={() => likeNews(id)}
             className="flex items-center gap-1 bg-slate-100 p-2 rounded-xl hover:bg-slate-200 hover:cursor-pointer"
           >
-            <AiOutlineLike /> {likeQuantity}
+            <AiOutlineLike />
+            {likeQuantity}
           </div>
           <div className="flex items-center gap-1 bg-slate-100 p-2 rounded-xl hover:bg-slate-200 hover:cursor-pointer">
             <AiOutlineComment /> {commentQuantity}
