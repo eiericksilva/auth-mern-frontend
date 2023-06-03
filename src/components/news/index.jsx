@@ -15,7 +15,7 @@ const News = ({
   commentQuantity,
   likeQuantity,
 }) => {
-  const { handleTrashNews } = useContext(NewsContext);
+  const { handleTrashNews, handleViewFullNews } = useContext(NewsContext);
   const location = useLocation();
   const showDeleteIcon = location.pathname === "/profile";
   return (
@@ -60,7 +60,9 @@ const News = ({
           )}
         </div>
         <div>
-          <Button>VEJA A NOTÍCIA COMPLETA</Button>
+          <Button onClick={() => handleViewFullNews(id)}>
+            VEJA A NOTÍCIA COMPLETA
+          </Button>
         </div>
       </div>
     </div>

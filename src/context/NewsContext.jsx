@@ -2,8 +2,10 @@ import { useState, createContext, useEffect } from "react";
 import api from "../services/api.js";
 const NewsContext = createContext();
 import { setToken } from "../helpers/setToken.js";
+import { useNavigate } from "react-router-dom";
 
 const NewsProvider = ({ children }) => {
+  const navigate = useNavigate();
   const [news, setNews] = useState([]);
   const [topNews, setTopNews] = useState(null);
 
@@ -29,6 +31,10 @@ const NewsProvider = ({ children }) => {
       .catch((error) => console.log(error));
   };
 
+  const handleViewFullNews = (postId) => {
+    navigate(`/news/${postId}`);
+  };
+
   useEffect(() => {
     getTopNews();
     getNews();
@@ -44,6 +50,7 @@ const NewsProvider = ({ children }) => {
         getTopNews,
         getNews,
         handleTrashNews,
+        handleViewFullNews,
       }}
     >
       {children}

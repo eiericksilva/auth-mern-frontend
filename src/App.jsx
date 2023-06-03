@@ -7,6 +7,7 @@ import ProtectedRoute from "./components/protectedRoute";
 import { UserProvider } from "./context/UserContext";
 import { NewsProvider } from "./context/NewsContext";
 import Profile from "./pages/Profile";
+import SinglePage from "./pages/SinglePage";
 const App = () => {
   return (
     <UserProvider>
@@ -44,6 +45,7 @@ const App = () => {
               </PrivateRoute>
             }
           />
+          <Route path="/news/:id" element={<SinglePage />} />
         </Routes>
       </NewsProvider>
     </UserProvider>

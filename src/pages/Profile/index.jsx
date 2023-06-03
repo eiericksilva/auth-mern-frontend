@@ -4,9 +4,12 @@ import api from "../../services/api";
 import { setToken } from "../../helpers/setToken";
 import News from "../../components/news";
 import { useEffect, useState } from "react";
+import { useContext } from "react";
+import { NewsContext } from "../../context/NewsContext";
 
 const Profile = () => {
   const [personalNews, setPersonalNews] = useState([]);
+  const { getTopNews, getNews } = useContext(NewsContext);
 
   const getNewsByUser = async () => {
     api
@@ -18,6 +21,8 @@ const Profile = () => {
   useEffect(() => {
     setToken();
     getNewsByUser();
+    getTopNews();
+    getNews();
   }, [personalNews]);
 
   return (

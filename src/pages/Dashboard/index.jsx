@@ -28,6 +28,7 @@ const Dashboard = () => {
         {news &&
           news.map((item) => (
             <News
+              id={item.id}
               key={item.id}
               title={item.title}
               text={item.text}
