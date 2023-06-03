@@ -18,6 +18,7 @@ const NewsDetails = () => {
       .get(`/news/${postId}`)
       .then((res) => setNews(res.data.news))
       .catch((error) => console.log(error));
+    console.log("news:", news);
   };
 
   useEffect(() => {
@@ -54,11 +55,17 @@ const NewsDetails = () => {
                 </div>
               </div>
             </div>
-            <div>
-              {news.comments && (
-                <div>{news.comments.map((comment) => comment.comment)}</div>
-              )}
-            </div>
+            <h1 className="text-3xl">Comentários dos usuários</h1>
+            {news.comments &&
+              news.comments.map((comment) => (
+                <div
+                  key={comment.commentId}
+                  className="flex justify-between bg-slate-300 min-h-[70px] p-4 my-4 rounded-xl border items-center"
+                >
+                  <div>{comment.comment}</div>
+                  <p className="text-slate-400"> author: {comment.userId}</p>
+                </div>
+              ))}
           </section>
         </main>
       ) : (
