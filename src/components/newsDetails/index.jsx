@@ -1,16 +1,19 @@
 import { useLocation } from "react-router-dom";
 import api from "../../services/api";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useEffect } from "react";
 import { setToken } from "../../helpers/setToken";
 import { AiOutlineComment, AiOutlineLike } from "react-icons/ai";
+import { NewsContext } from "../../context/NewsContext";
 
 const NewsDetails = () => {
+  const { likeNews, addCommentNews } = useContext(NewsContext);
   const [news, setNews] = useState();
+  const [comment, setComment] = useState("");
+  const [commentBoxIsOpen, setCommentBoxIsOpen] = useState(true);
   let id = "";
   const location = useLocation();
   id = location.pathname.split("/").pop();
-  console.log(id);
 
   const getNewsByPostId = async (postId) => {
     setToken();
@@ -18,12 +21,19 @@ const NewsDetails = () => {
       .get(`/news/${postId}`)
       .then((res) => setNews(res.data.news))
       .catch((error) => console.log(error));
-    console.log("news:", news);
+  };
+
+  const commentNews = async (e) => {
+    e.preventDefault();
+
+    addCommentNews(id, { comment });
+    setComment("");
+    setCommentBoxIsOpen(false);
   };
 
   useEffect(() => {
     getNewsByPostId(id);
-  }, []);
+  }, [news]);
   return (
     <div>
       {news ? (
@@ -45,22 +55,45 @@ const NewsDetails = () => {
                 <p className="text-xl font-thin">{news.text}</p>
               </div>
               <div className="flex gap-8 mt-10">
-                <div className="flex items-center gap-1">
+                <div
+                  className="flex items-center gap-1 cursor-pointer"
+                  onClick={() => setCommentBoxIsOpen(!commentBoxIsOpen)}
+                >
                   <AiOutlineComment />
                   <span>{`Comentários (${news.comments.length})`}</span>
                 </div>
-                <div className="flex items-center gap-1">
+                <div
+                  className="flex items-center gap-1 cursor-pointer"
+                  onClick={() => likeNews(id)}
+                >
                   <AiOutlineLike />
                   <span>{`Likes (${news.likes.length})`}</span>
                 </div>
               </div>
+              {commentBoxIsOpen && (
+                <div className="">
+                  <input
+                    placeholder="Digite seu comentário aqui"
+                    type="text"
+                    className="w-full rounded-3xl rounded-tl-none bg-slate-200 outline-slate-300 h-24 my-4 p-4"
+                    value={comment}
+                    onChange={(e) => setComment(e.target.value)}
+                  />
+                  <button
+                    className="bg-slate-500 text-slate-50 p-4 rounded-lg"
+                    onClick={commentNews}
+                  >
+                    Enviar Comentário
+                  </button>
+                </div>
+              )}
             </div>
             <h1 className="text-3xl">Comentários dos usuários</h1>
             {news.comments &&
               news.comments.map((comment) => (
                 <div
                   key={comment.commentId}
-                  className="flex justify-between bg-slate-300 min-h-[70px] p-4 my-4 rounded-xl border items-center"
+                  className="flex justify-between bg-slate-100 min-h-[70px] p-4 my-4 rounded-xl border items-center"
                 >
                   <div>{comment.comment}</div>
                   <p className="text-slate-400"> author: {comment.userId}</p>

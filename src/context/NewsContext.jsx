@@ -43,6 +43,14 @@ const NewsProvider = ({ children }) => {
       .catch((error) => console.log(error.message));
   };
 
+  const addCommentNews = async (postId, comment) => {
+    setToken();
+    api
+      .patch(`/news/comment/${postId}`, comment)
+      .then((res) => console.log(res.data))
+      .catch((error) => console.log(error));
+  };
+
   useEffect(() => {
     getTopNews();
     getNews();
@@ -60,6 +68,7 @@ const NewsProvider = ({ children }) => {
         handleTrashNews,
         handleViewFullNews,
         likeNews,
+        addCommentNews,
       }}
     >
       {children}
