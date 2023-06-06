@@ -51,6 +51,14 @@ const NewsProvider = ({ children }) => {
       .catch((error) => console.log(error));
   };
 
+  const deleteCommentNews = async (postId, commentId) => {
+    setToken();
+    api
+      .patch(`/news/comment/${postId}/${commentId}`)
+      .then((res) => console.log(res.data))
+      .catch((error) => console.log(error));
+  };
+
   useEffect(() => {
     getTopNews();
     getNews();
@@ -69,6 +77,7 @@ const NewsProvider = ({ children }) => {
         handleViewFullNews,
         likeNews,
         addCommentNews,
+        deleteCommentNews,
       }}
     >
       {children}

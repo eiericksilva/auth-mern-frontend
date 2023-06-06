@@ -1,6 +1,5 @@
 import Navbar from "../../components/nav";
 import News from "../../components/news";
-import TopNews from "../../components/topNews";
 import Button from "../../components/button";
 import { useContext } from "react";
 import { NewsContext } from "../../context/NewsContext";
@@ -13,12 +12,17 @@ const Dashboard = () => {
     <div className="h-screen flex flex-col justify-between">
       <Navbar />
       <header className="flex flex-col items-center justify-around mx-8">
-        {topNews && topNews ? (
-          <TopNews
+        {topNews ? (
+          <News
+            id={topNews.postId}
+            key={topNews.postId}
             title={topNews.title}
             text={topNews.text}
             banner={topNews.banner}
             username={topNews.username}
+            commentQuantity={topNews.comments.length}
+            likeQuantity={topNews.likes.length}
+            className="w-full"
           />
         ) : (
           <span>Loading news...</span>

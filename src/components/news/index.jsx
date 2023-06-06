@@ -6,6 +6,7 @@ import { useLocation } from "react-router-dom";
 import { useContext } from "react";
 import { NewsContext } from "../../context/NewsContext";
 const News = ({
+  className,
   id,
   keyProp,
   title,
@@ -15,14 +16,14 @@ const News = ({
   commentQuantity,
   likeQuantity,
 }) => {
-  const { handleTrashNews, handleViewFullNews, likeNews, isLiked } =
+  const { handleTrashNews, handleViewFullNews, likeNews } =
     useContext(NewsContext);
   const location = useLocation();
   const showDeleteIcon = location.pathname === "/profile";
   return (
     <div
       key={keyProp}
-      className="flex flex-col bg-white my-4 p-4 w-[49%] rounded-md gap-8 shadow-lg"
+      className={`flex flex-col bg-white my-4 p-4 w-[49%] rounded-md gap-8 shadow-lg ${className}`}
     >
       <div className="flex gap-4 items-center">
         <div className="w-1/3">
