@@ -15,6 +15,13 @@ const UserProvider = ({ children }) => {
 
   useEffect(() => {
     setToken();
+
+    const localStorageUser = localStorage.getItem("user");
+
+    if (localStorageUser) {
+      setUser(JSON.parse(localStorageUser));
+      setIsAuthenticated(true);
+    }
   }, []);
 
   const registerUser = async (userData) => {
@@ -23,6 +30,9 @@ const UserProvider = ({ children }) => {
       .then((res) => {
         setIsAuthenticated(true);
         setUser(res.data);
+
+        localStorage.setItem("user", JSON.stringify(res.data));
+
         navigate("/dashboard");
       })
       .catch((error) => {
@@ -40,6 +50,9 @@ const UserProvider = ({ children }) => {
         setIsAuthenticated(true);
         setApiError(null);
         setUser(res.data);
+
+        localStorage.setItem("user", JSON.stringify(res.data));
+
         navigate("/dashboard");
       })
       .catch((error) => {
@@ -52,6 +65,9 @@ const UserProvider = ({ children }) => {
     Cookies.remove("token");
     setIsAuthenticated(false);
     setUser(null);
+
+    localStorage.removeItem("user");
+
     navigate("/");
   };
 

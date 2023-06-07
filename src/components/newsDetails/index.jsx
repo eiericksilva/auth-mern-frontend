@@ -5,11 +5,13 @@ import { useEffect } from "react";
 import { setToken } from "../../helpers/setToken";
 import { AiOutlineComment, AiOutlineLike } from "react-icons/ai";
 import { NewsContext } from "../../context/NewsContext";
+import { UserContext } from "../../context/UserContext";
 import { BsTrash } from "react-icons/bs";
 
 const NewsDetails = () => {
   const { likeNews, addCommentNews, deleteCommentNews } =
     useContext(NewsContext);
+  const { user } = useContext(UserContext);
   const [news, setNews] = useState();
   const [comment, setComment] = useState("");
   const [commentBoxIsOpen, setCommentBoxIsOpen] = useState(false);
@@ -36,6 +38,7 @@ const NewsDetails = () => {
   useEffect(() => {
     getNewsByPostId(id);
   }, [news]);
+
   return (
     <div>
       {news ? (
@@ -98,20 +101,16 @@ const NewsDetails = () => {
                   className="flex justify-between bg-slate-100 min-h-[100px] p-4 my-4 rounded-xl border items-center"
                 >
                   <div>{comment.comment}</div>
-                  <div className="flex flex-col items-center gap-4">
-                    <BsTrash
-                      className="cursor-pointer"
-                      onClick={() =>
-                        deleteCommentNews(news.postId, comment.commentId)
-                      }
-                    />
-                    <p className="text-slate-400">
-                      author:
-                      {comment.userData && comment.userData.username
-                        ? comment.userData.username
-                        : comment.userId}
-                    </p>
-                  </div>
+                  {user.user._id === comment.userId && (
+                    <div className="flex flex-col items-center gap-4">
+                      <BsTrash
+                        className="cursor-pointer"
+                        onClick={() => {
+                          deleteCommentNews(news.postId, comment.commentId);
+                        }}
+                      />
+                    </div>
+                  )}
                 </div>
               ))}
           </section>
