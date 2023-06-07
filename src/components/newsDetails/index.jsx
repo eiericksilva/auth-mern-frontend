@@ -100,7 +100,10 @@ const NewsDetails = () => {
                   key={comment.commentId}
                   className="flex justify-between bg-slate-100 min-h-[100px] p-4 my-4 rounded-xl border items-center"
                 >
-                  <div>{comment.comment}</div>
+                  <div className="flex flex-col space-y-8">
+                    <span className="text-slate-400">{comment.username}</span>
+                    <div>{comment.comment}</div>
+                  </div>
                   {user.user._id === comment.userId && (
                     <div className="flex flex-col items-center gap-4">
                       <BsTrash

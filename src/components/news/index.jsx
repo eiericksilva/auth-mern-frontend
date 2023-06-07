@@ -23,7 +23,7 @@ const News = ({
   return (
     <div
       key={keyProp}
-      className={`flex flex-col bg-white my-4 p-4 w-[49%] rounded-md gap-8 shadow-lg ${className}`}
+      className={`flex flex-col bg-slate-50 my-4 p-4 w-[49%] rounded-md gap-8 shadow-lg border border-slate-300 ${className}`}
     >
       <div className="flex gap-4 items-center">
         <div className="w-1/3">
