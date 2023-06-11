@@ -7,12 +7,34 @@ import { useNavigate } from "react-router-dom";
 const NewsProvider = ({ children }) => {
   const navigate = useNavigate();
   const [news, setNews] = useState([]);
+  const [nextUrl, setNextUrl] = useState(null);
   const [topNews, setTopNews] = useState(null);
+  const [userLiked, setUserLiked] = useState(false);
+  const [loadingMore, setLoadingMore] = useState(false);
+
+  const handleLoadMore = () => {
+    if (!nextUrl || loadingMore) {
+      return;
+    }
+    setLoadingMore(true);
+
+    try {
+      getNews();
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoadingMore(false);
+    }
+  };
 
   const getNews = async () => {
     api
-      .get("/news")
-      .then((res) => setNews(res.data.results))
+      .get(nextUrl || "/news")
+      .then((res) => {
+        console.log("getNews Acionado");
+        setNews([...news, ...res.data.results]);
+        setNextUrl(res.data.nextUrl);
+      })
       .catch((error) => console.log(error));
   };
 
@@ -39,7 +61,14 @@ const NewsProvider = ({ children }) => {
     setToken();
     api
       .patch(`/news/like/${postId}`)
-      .then((res) => console.log(res.data))
+      .then((res) => {
+        if (res.data.userLiked === true) {
+          setUserLiked(true);
+        } else {
+          setUserLiked(false);
+        }
+        console.log(res.data);
+      })
       .catch((error) => console.log(error.message));
   };
 
@@ -62,13 +91,15 @@ const NewsProvider = ({ children }) => {
   useEffect(() => {
     getTopNews();
     getNews();
-  }, [news]);
+  }, []);
 
   return (
     <NewsContext.Provider
       value={{
         news,
         topNews,
+        userLiked,
+        loadingMore,
         setNews,
         setTopNews,
         getTopNews,
@@ -78,6 +109,8 @@ const NewsProvider = ({ children }) => {
         likeNews,
         addCommentNews,
         deleteCommentNews,
+        setUserLiked,
+        handleLoadMore,
       }}
     >
       {children}

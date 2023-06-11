@@ -5,13 +5,11 @@ import { setToken } from "../../helpers/setToken";
 import News from "../../components/news";
 import { useEffect, useState } from "react";
 import { useContext } from "react";
-import { NewsContext } from "../../context/NewsContext";
 import { UserContext } from "../../context/UserContext";
 import { BsFillPersonFill, BsFillJournalBookmarkFill } from "react-icons/bs";
 
 const Profile = () => {
   const [personalNews, setPersonalNews] = useState([]);
-  const { getTopNews, getNews } = useContext(NewsContext);
   const { user } = useContext(UserContext);
 
   const getNewsByUser = async () => {
@@ -24,8 +22,6 @@ const Profile = () => {
   useEffect(() => {
     setToken();
     getNewsByUser();
-    getTopNews();
-    getNews();
   }, [personalNews]);
 
   return (

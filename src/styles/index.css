@@ -6,7 +6,6 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    font-family: 'Roboto Mono', monospace;
 }
 
 body {
@@ -17,15 +16,8 @@ body {
     background-color: #DADFF5;
 }
 
-h1, h2, h3, h4, h5, h6 {
-    
+h1 {
+    font-family: 'Libre Baskerville', serif;
     text-transform: uppercase;
 }
-a {
-    color: #596643;
-    font-weight: 700;
-    font-size: 12px;
-}
-a:hover {
-    color: #475236;
-}
+

@@ -34,12 +34,12 @@ const News = ({
           <TextLimit
             text={text}
             limit="150"
-            className="text-sm max-h-28 overflow-y-hidden text-ellipsis"
+            className="text-lg max-h-28 overflow-y-hidden text-ellipsis"
           />
         </div>
       </div>
       <div className="flex justify-between items-center">
-        <p>author: {username}</p>
+        <p className="text-sm">author: {username}</p>
       </div>
       <div className="flex justify-between">
         <div className="flex w-1/5 justify-around">
