@@ -37,7 +37,7 @@ const NewsDetails = () => {
 
   useEffect(() => {
     getNewsByPostId(id);
-  }, [news]);
+  }, []);
 
   return (
     <div>

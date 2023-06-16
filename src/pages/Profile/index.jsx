@@ -22,7 +22,7 @@ const Profile = () => {
   useEffect(() => {
     setToken();
     getNewsByUser();
-  }, [personalNews]);
+  }, []);
 
   return (
     <div className="h-screen flex flex-col justify-between w-screen overflow-x-hidden">

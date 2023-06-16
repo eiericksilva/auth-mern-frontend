@@ -20,6 +20,7 @@ const News = ({
     useContext(NewsContext);
   const location = useLocation();
   const showDeleteIcon = location.pathname === "/profile";
+
   return (
     <div
       key={keyProp}

@@ -1,16 +1,34 @@
-import { useState, createContext, useEffect } from "react";
+import { useState, createContext, useEffect, useCallback } from "react";
 import api from "../services/api.js";
-const NewsContext = createContext();
 import { setToken } from "../helpers/setToken.js";
 import { useNavigate } from "react-router-dom";
+const NewsContext = createContext();
 
 const NewsProvider = ({ children }) => {
   const navigate = useNavigate();
-  const [news, setNews] = useState([]);
   const [nextUrl, setNextUrl] = useState(null);
-  const [topNews, setTopNews] = useState(null);
   const [userLiked, setUserLiked] = useState(false);
   const [loadingMore, setLoadingMore] = useState(false);
+
+  const [news, setNews] = useState([]);
+  const [topNews, setTopNews] = useState(null);
+
+  const getNews = useCallback(async () => {
+    api
+      .get(nextUrl || "/news")
+      .then((res) => {
+        setNews([...news, ...res.data.results]);
+        setNextUrl(res.data.nextUrl);
+      })
+      .catch((error) => console.log(error));
+  }, []);
+
+  const getTopNews = async () => {
+    api
+      .get("/news/top")
+      .then((res) => setTopNews(res.data))
+      .catch((error) => console.log(error));
+  };
 
   const handleLoadMore = () => {
     if (!nextUrl || loadingMore) {
@@ -26,25 +44,6 @@ const NewsProvider = ({ children }) => {
       setLoadingMore(false);
     }
   };
-
-  const getNews = async () => {
-    api
-      .get(nextUrl || "/news")
-      .then((res) => {
-        console.log("getNews Acionado");
-        setNews([...news, ...res.data.results]);
-        setNextUrl(res.data.nextUrl);
-      })
-      .catch((error) => console.log(error));
-  };
-
-  const getTopNews = async () => {
-    api
-      .get("/news/top")
-      .then((res) => setTopNews(res.data))
-      .catch((error) => console.log(error));
-  };
-
   const handleTrashNews = async (postId) => {
     setToken();
     api
@@ -71,7 +70,6 @@ const NewsProvider = ({ children }) => {
       })
       .catch((error) => console.log(error.message));
   };
-
   const addCommentNews = async (postId, comment) => {
     setToken();
     api
@@ -79,7 +77,6 @@ const NewsProvider = ({ children }) => {
       .then((res) => console.log(res.data))
       .catch((error) => console.log(error));
   };
-
   const deleteCommentNews = async (postId, commentId) => {
     setToken();
     api
@@ -91,7 +88,7 @@ const NewsProvider = ({ children }) => {
   useEffect(() => {
     getTopNews();
     getNews();
-  }, []);
+  }, [getNews]);
 
   return (
     <NewsContext.Provider
