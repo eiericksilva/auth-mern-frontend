@@ -5,6 +5,7 @@ import * as yup from "yup";
 import api from "../../services/api";
 import ErrorMessage from "../errorMessage";
 import { useContext } from "react";
+import { NewsContext } from "../../context/NewsContext";
 import { DialogContext } from "../../context/ModalContext";
 import Button from "../button";
 import TextArea from "../../components/textarea";
@@ -18,6 +19,7 @@ const schemaCreatePost = yup
   .required();
 
 const CreatePostForm = () => {
+  const { news, setNews } = useContext(NewsContext);
   const { handleOpenModal } = useContext(DialogContext);
   const {
     register,
@@ -31,7 +33,10 @@ const CreatePostForm = () => {
     try {
       api
         .post("/news", data)
-        .then((res) => console.log(res.data))
+        .then((res) => {
+          setNews([...news, res.data]);
+          window.location.reload();
+        })
         .catch((error) => console.log(error));
       handleOpenModal();
     } catch (error) {

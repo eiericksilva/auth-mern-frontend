@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import Button from "../button";
 import TextLimit from "../textLimit";
 import { AiOutlineLike, AiOutlineComment } from "react-icons/ai";

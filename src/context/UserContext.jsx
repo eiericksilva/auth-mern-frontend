@@ -7,6 +7,7 @@ import { setToken } from "../helpers/setToken";
 
 const UserContext = createContext();
 
+// eslint-disable-next-line react/prop-types
 const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [apiError, setApiError] = useState(null);

@@ -2,6 +2,7 @@ import Cookies from "js-cookie";
 import { Navigate } from "react-router-dom";
 import jwtDecode from "jwt-decode";
 
+// eslint-disable-next-line react/prop-types
 const PrivateRoute = ({ children }) => {
   const token = Cookies.get("token");
 

@@ -1,27 +1,25 @@
-import { useState, createContext, useEffect, useCallback } from "react";
+import { useState, createContext, useEffect } from "react";
 import api from "../services/api.js";
 import { setToken } from "../helpers/setToken.js";
 import { useNavigate } from "react-router-dom";
 const NewsContext = createContext();
 
+// eslint-disable-next-line react/prop-types
 const NewsProvider = ({ children }) => {
   const navigate = useNavigate();
-  const [nextUrl, setNextUrl] = useState(null);
   const [userLiked, setUserLiked] = useState(false);
-  const [loadingMore, setLoadingMore] = useState(false);
 
   const [news, setNews] = useState([]);
   const [topNews, setTopNews] = useState(null);
 
-  const getNews = useCallback(async () => {
-    api
-      .get(nextUrl || "/news")
-      .then((res) => {
-        setNews([...news, ...res.data.results]);
-        setNextUrl(res.data.nextUrl);
-      })
-      .catch((error) => console.log(error));
-  }, []);
+  const getNews = async () => {
+    try {
+      const response = await api.get("/news");
+      setNews(response.data.results);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const getTopNews = async () => {
     api
@@ -30,26 +28,17 @@ const NewsProvider = ({ children }) => {
       .catch((error) => console.log(error));
   };
 
-  const handleLoadMore = () => {
-    if (!nextUrl || loadingMore) {
-      return;
-    }
-    setLoadingMore(true);
-
-    try {
-      getNews();
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setLoadingMore(false);
-    }
-  };
   const handleTrashNews = async (postId) => {
     setToken();
-    api
-      .delete(`/news/${postId}`)
-      .then((res) => console.log(res.data.message))
-      .catch((error) => console.log(error));
+
+    try {
+      api.delete(`/news/${postId}`).then((res) => {
+        console.log(res);
+        window.location.reload();
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleViewFullNews = (postId) => {
@@ -67,6 +56,7 @@ const NewsProvider = ({ children }) => {
           setUserLiked(false);
         }
         console.log(res.data);
+        window.location.reload();
       })
       .catch((error) => console.log(error.message));
   };
@@ -77,18 +67,22 @@ const NewsProvider = ({ children }) => {
       .then((res) => console.log(res.data))
       .catch((error) => console.log(error));
   };
+
   const deleteCommentNews = async (postId, commentId) => {
     setToken();
     api
       .patch(`/news/comment/${postId}/${commentId}`)
-      .then((res) => console.log(res.data))
+      .then((res) => {
+        console.log(res.data);
+        window.location.reload();
+      })
       .catch((error) => console.log(error));
   };
 
   useEffect(() => {
     getTopNews();
     getNews();
-  }, [getNews]);
+  }, []);
 
   return (
     <NewsContext.Provider
@@ -96,7 +90,6 @@ const NewsProvider = ({ children }) => {
         news,
         topNews,
         userLiked,
-        loadingMore,
         setNews,
         setTopNews,
         getTopNews,
@@ -107,7 +100,6 @@ const NewsProvider = ({ children }) => {
         addCommentNews,
         deleteCommentNews,
         setUserLiked,
-        handleLoadMore,
       }}
     >
       {children}

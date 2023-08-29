@@ -33,6 +33,8 @@ const NewsDetails = () => {
     addCommentNews(id, { comment });
     setComment("");
     setCommentBoxIsOpen(false);
+
+    window.location.reload();
   };
 
   useEffect(() => {
