@@ -2,9 +2,9 @@ import { useState, createContext, useEffect } from "react";
 import api from "../services/api.js";
 import { setToken } from "../helpers/setToken.js";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 const NewsContext = createContext();
 
-// eslint-disable-next-line react/prop-types
 const NewsProvider = ({ children }) => {
   const navigate = useNavigate();
   const [userLiked, setUserLiked] = useState(false);
@@ -32,12 +32,12 @@ const NewsProvider = ({ children }) => {
     setToken();
 
     try {
-      api.delete(`/news/${postId}`).then((res) => {
-        console.log(res);
+      api.delete(`/news/${postId}`).then(() => {
+        //toast.success("Notícia excluída com sucesso!");
         window.location.reload();
       });
     } catch (error) {
-      console.log(error);
+      toast.error(error);
     }
   };
 
@@ -52,8 +52,12 @@ const NewsProvider = ({ children }) => {
       .then((res) => {
         if (res.data.userLiked === true) {
           setUserLiked(true);
+          window.location.reload();
+          //toast.success(res.data.message);
         } else {
           setUserLiked(false);
+          window.location.reload();
+          //toast.success(res.data.message);
         }
         console.log(res.data);
         window.location.reload();
@@ -64,8 +68,13 @@ const NewsProvider = ({ children }) => {
     setToken();
     api
       .patch(`/news/comment/${postId}`, comment)
-      .then((res) => console.log(res.data))
-      .catch((error) => console.log(error));
+      .then((res) => {
+        console.log(res.data);
+        toast.success("Comentário adicionado com sucesso!");
+      })
+      .catch((error) => {
+        toast.error(error);
+      });
   };
 
   const deleteCommentNews = async (postId, commentId) => {
@@ -75,6 +84,7 @@ const NewsProvider = ({ children }) => {
       .then((res) => {
         console.log(res.data);
         window.location.reload();
+        //toast.success("Comentário removido com sucesso!");
       })
       .catch((error) => console.log(error));
   };

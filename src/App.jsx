@@ -8,6 +8,9 @@ import { UserProvider } from "./context/UserContext";
 import { NewsProvider } from "./context/NewsContext";
 import Profile from "./pages/Profile";
 import SinglePage from "./pages/SinglePage";
+import { ToastContainer } from "react-toastify";
+
+import "react-toastify/dist/ReactToastify.css";
 const App = () => {
   return (
     <UserProvider>
@@ -48,6 +51,7 @@ const App = () => {
           <Route path="/news/:id" element={<SinglePage />} />
         </Routes>
       </NewsProvider>
+      <ToastContainer />
     </UserProvider>
   );
 };

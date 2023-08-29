@@ -9,6 +9,7 @@ import { NewsContext } from "../../context/NewsContext";
 import { DialogContext } from "../../context/ModalContext";
 import Button from "../button";
 import TextArea from "../../components/textarea";
+import { toast } from "react-toastify";
 
 const schemaCreatePost = yup
   .object({
@@ -35,9 +36,10 @@ const CreatePostForm = () => {
         .post("/news", data)
         .then((res) => {
           setNews([...news, res.data]);
+          //toast.success("Post criado com sucesso!");
           window.location.reload();
         })
-        .catch((error) => console.log(error));
+        .catch((error) => toast.error(error));
       handleOpenModal();
     } catch (error) {
       console.log("error:", error);

@@ -8,7 +8,7 @@ const Dashboard = () => {
   const { topNews, news } = useContext(NewsContext);
 
   return (
-    <div className="h-screen flex flex-col justify-between">
+    <div className="h-screen w-screen flex flex-col justify-between">
       <Navbar />
       <header className="flex flex-col items-center justify-around mx-8">
         {topNews ? (
@@ -37,8 +37,8 @@ const Dashboard = () => {
               text={item.text}
               banner={item.banner}
               username={item.username}
-              commentQuantity={item.comments.length}
-              likeQuantity={item.likes.length}
+              commentQuantity={item.comments?.length || 0}
+              likeQuantity={item.likes?.length || 0}
             />
           ))}
       </main>
