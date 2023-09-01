@@ -9,26 +9,35 @@ const NewsProvider = ({ children }) => {
   const navigate = useNavigate();
   const [userLiked, setUserLiked] = useState(false);
 
+  const [isLoading, setIsLoading] = useState(false);
   const [news, setNews] = useState([]);
   const [topNews, setTopNews] = useState(null);
 
-  const getNews = async () => {
+  async function getNews() {
     try {
+      setIsLoading(true);
       const response = await api.get("/news");
       setNews(response.data.results);
     } catch (error) {
       console.log(error);
+    } finally {
+      setIsLoading(false);
     }
-  };
+  }
 
-  const getTopNews = async () => {
-    api
-      .get("/news/top")
-      .then((res) => setTopNews(res.data))
-      .catch((error) => console.log(error));
-  };
+  async function getTopNews() {
+    try {
+      setIsLoading(true);
+      const res = await api.get("/news/top");
+      setTopNews(res.data);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
+  }
 
-  const handleTrashNews = async (postId) => {
+  async function handleTrashNews(postId) {
     setToken();
 
     try {
@@ -39,43 +48,40 @@ const NewsProvider = ({ children }) => {
     } catch (error) {
       toast.error(error);
     }
-  };
+  }
 
-  const handleViewFullNews = (postId) => {
+  function handleViewFullNews(postId) {
     navigate(`/news/${postId}`);
-  };
+  }
 
-  const likeNews = async (postId) => {
+  async function likeNews(postId) {
     setToken();
-    api
-      .patch(`/news/like/${postId}`)
-      .then((res) => {
-        if (res.data.userLiked === true) {
-          setUserLiked(true);
-          window.location.reload();
-          //toast.success(res.data.message);
-        } else {
-          setUserLiked(false);
-          window.location.reload();
-          //toast.success(res.data.message);
-        }
-        console.log(res.data);
+    try {
+      const res = await api.patch(`/news/like/${postId}`);
+      if (res.data.userLiked === true) {
+        setUserLiked(true);
         window.location.reload();
-      })
-      .catch((error) => console.log(error.message));
-  };
-  const addCommentNews = async (postId, comment) => {
+        //toast.success(res.data.message);
+      }
+      console.log(res.data);
+      window.location.reload();
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async function addCommentNews(postId, comment) {
     setToken();
-    api
-      .patch(`/news/comment/${postId}`, comment)
-      .then((res) => {
-        console.log(res.data);
-        toast.success("Comentário adicionado com sucesso!");
-      })
-      .catch((error) => {
-        toast.error(error);
-      });
-  };
+    try {
+      const res = await api.patch(`/news/comment/${postId}`, comment);
+      console.log(res);
+      window.location.reload();
+      //toast.success("Comentário adicionado com sucesso!");
+    } catch (error) {
+      console.log(error);
+      //toast.error(error);
+    }
+  }
 
   const deleteCommentNews = async (postId, commentId) => {
     setToken();
@@ -100,6 +106,8 @@ const NewsProvider = ({ children }) => {
         news,
         topNews,
         userLiked,
+        isLoading,
+        setIsLoading,
         setNews,
         setTopNews,
         getTopNews,
